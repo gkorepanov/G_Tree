@@ -1,6 +1,10 @@
 #ifndef G_LEX
 #define G_LEX
 
+#include <string>
+
+using namespace std;
+
 extern int yylex(void);
 extern char* yytext;
 
@@ -10,7 +14,7 @@ enum LEX_T {
     WORD, // either variable or function
     LBRACKET,
     RBRACKET
-}
+};
 
 class CLex {
 private:
@@ -18,10 +22,10 @@ private:
     string text_;
 
 public:
-    Clex(LEX_T type, char* text):
+    CLex(LEX_T type, char* text):
         type_(type),
         text_(text)
     {}
-}
+};
 
 #endif

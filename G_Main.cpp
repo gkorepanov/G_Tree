@@ -1,8 +1,9 @@
 #include <string.h>
 #include <stdio.h>
-#include "tools/alerts.h"
-#include "G_lex/G_lex.h"
-#include "G_tree/G_tree.h"
+#include "Tools/Alerts.h"
+#include "G_Lex/G_Lex.h"
+#include "G_Tree/G_Tree.h"
+#include <vector>
 
 // make lex know input stream
 void proceed(char* filename) {
@@ -20,7 +21,7 @@ void proceed(char* filename) {
     LEX_T res;
 
     while (res = static_cast<LEX_T> yylex()){
-        Clex cur_lex(res, yytext);
+        CLex cur_lex(res, yytext);
         lex_seq.push_back(cur_lex);
         printf("%s\n", yytext);
     }

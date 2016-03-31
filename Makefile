@@ -1,7 +1,7 @@
 .PHONY: clean
 
 TARGET = bin/G_Tree
-FLAGS = -std=c++11 =Wall -g
+FLAGS = -std=c++11 -Wall -g
 OBJS = G_Main.o G_Lex/G_Lex.o
 LEX = G_Lex/G_Lex.cpp
 LEXL = $(LEX:.cpp=.l)
@@ -19,7 +19,7 @@ $(TARGET): $(OBJS)
 	g++ $(FLAGS) -MM -o $(patsubst %.o, %.d, $@) $<
 
 
-LEX: LEXL
-	flex -o LEX $<
+$(LEX): $(LEXL)
+	flex -o $@ $<
 
 
