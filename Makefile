@@ -1,4 +1,4 @@
-.PHONY: clean
+.PHONY: clean run
 
 TARGET = bin/G_Tree
 FLAGS = -std=c++11 -Wall -g
@@ -22,4 +22,9 @@ $(TARGET): $(OBJS)
 $(LEX): $(LEXL)
 	flex -o $@ $<
 
+clean:
+	rm $(OBJS) $(TARGET) $(LEX)
+	find . -name "*.d" | xargs rm
 
+run:
+	$(TARGET)

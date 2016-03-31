@@ -3,11 +3,9 @@
 
 #include <vector>
 class CTree {
-private:
-
 public:
-    CTree();
-    void construct(vector<CLex> lex_seq);
+    CTree() {};
+    void construct(vector<CLex> lex_seq) {};
     void print();
 };
 

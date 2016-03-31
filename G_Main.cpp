@@ -7,30 +7,32 @@
 
 // make lex know input stream
 void proceed(char* filename) {
-    if (!strcmp(argv[1], "stdin")) 
+    FILE* _finput = NULL;
+
+    if (!strcmp(filename, "stdin")) 
         yyin = stdin;
     else {
-        FILE* _finput = fopen(argv[1], "r");
+        _finput = fopen(filename, "r");
         if (!_finput) 
-            USERERR("Couldn't open file \"%s\"" argv[1])
+            USERERR("Couldn't open file \"%s\"", filename)
 
         yyin = _finput;
     }
 
     vector<CLex> lex_seq;
-    LEX_T res;
+    int res;
 
-    while (res = static_cast<LEX_T> yylex()){
-        CLex cur_lex(res, yytext);
+    while ( (res = yylex()) ) {
+        CLex cur_lex(static_cast<LEX_T> (res), yytext);
         lex_seq.push_back(cur_lex);
-        printf("%s\n", yytext);
+        printf("\"%s\"\n", yytext);
     }
-
+    
     CTree tree;
     tree.construct(lex_seq);
 
-    fclose(_finput);
-
+    if (_finput)
+        fclose(_finput);
 }
 
 int main(int argc, char** argv) {

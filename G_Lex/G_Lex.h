@@ -7,13 +7,14 @@ using namespace std;
 
 extern int yylex(void);
 extern char* yytext;
+extern FILE* yyin;
 
 enum LEX_T {
-    OPERATOR,
-    VALUE,
-    WORD, // either variable or function
-    LBRACKET,
-    RBRACKET
+    OPERATOR = 1,
+    VALUE = 2,
+    WORD = 3, // either variable or function
+    LBRACKET = 4,
+    RBRACKET = 5
 };
 
 class CLex {
