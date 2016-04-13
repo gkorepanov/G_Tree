@@ -21,15 +21,16 @@ void proceed(char* filename) {
 
     vector<CLex> lex_seq;
     int res;
+    
+    CTreeBuilder TreeBuilder;
 
     while ( (res = yylex()) ) {
         CLex cur_lex(static_cast<LEX_T> (res), yytext);
-        lex_seq.push_back(cur_lex);
+        TreeBuilder.lex_seq_.push_back(cur_lex);
         printf("\"%s\"\n", yytext);
     }
     
-    CTree tree;
-    tree.construct(lex_seq);
+    CTree Tree = TreeBuilder.construct();
 
     if (_finput)
         fclose(_finput);

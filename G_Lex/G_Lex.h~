@@ -19,10 +19,11 @@ enum LEX_T {
 };
 
 class CLex {
-public:
+private:
     LEX_T type_;
     string text_;
 
+public:
     CLex(LEX_T type, char* text):
         type_(type),
         text_(text)
