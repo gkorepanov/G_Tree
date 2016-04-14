@@ -29,8 +29,12 @@ void proceed(char* filename) {
         TreeBuilder.lex_seq_.push_back(cur_lex);
         printf("\"%s\"\n", yytext);
     }
-    
+    TreeBuilder.lex_seq_.push_back(CLex(static_cast<LEX_T> (END), ""));
+
     CTree Tree = TreeBuilder.construct();
+	
+    print_line();
+    Tree.show();
 
     if (_finput)
         fclose(_finput);

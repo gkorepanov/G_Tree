@@ -3,9 +3,16 @@
 #ifndef ALERTS_H
 #define ALERTS_H
 
-#define DEBUGMODE
+#define DEBUGMODE 0
 
-#ifdef DEBUGMODE
+
+
+#define IFDEBUG(code)\
+    {\
+        if (DEBUGMODE) {\
+            code\
+        }\
+    }\
 
 
 #define ERRORSTR\
@@ -43,9 +50,10 @@
 
 #define DBGPRINT(...)\
     {\
-        printf(__VA_ARGS__);\
-        printf("\n");\
+        if (DEBUGMODE) {\
+            printf(__VA_ARGS__);\
+            printf("\n");\
+        }\
     }
 
-#endif
 #endif

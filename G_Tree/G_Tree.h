@@ -16,8 +16,8 @@ typedef long double Tree_T;
 class CNode {
 public:
     // virtual CNode* derivate();
-    virtual void show();
-    virtual void print(uint_ level = 0);
+    virtual void show() = 0;
+    virtual void print(uint_ level = 0) = 0;
 };
 
 class CTree {
@@ -89,7 +89,7 @@ private:
     shared_ptr<CNode> GetSum();
     shared_ptr<CNode> GetMul();
     shared_ptr<CNode> GetTok();
-
+    shared_ptr<CNode> GetStr();
     vector<CLex>::iterator pos_;
 public:
     explicit CTreeBuilder();

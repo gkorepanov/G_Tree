@@ -2,7 +2,7 @@
 
 TARGET = bin/G_Tree
 FLAGS = -std=c++11 -Wall -g
-OBJS = G_Main.o G_Lex/G_Lex.o G_Tree/G_Tree.o
+OBJS = G_Main.o G_Lex/G_Lex.o G_Tree/G_Tree.o Tools/Utils.o
 LEX = G_Lex/G_Lex.cpp
 LEXL = $(LEX:.cpp=.l)
 DEPS = $(OBJS:.o=.d)
@@ -27,4 +27,4 @@ clean:
 	-find . -name "*.d" | xargs rm
 
 run:
-	$(TARGET)
+	$(TARGET) test.txt
