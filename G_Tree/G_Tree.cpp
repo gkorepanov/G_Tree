@@ -7,8 +7,6 @@
 
 #define INIT_LEX_SEQ_SIZE 100
 
-using namespace std;
-
 CTree::CTree(shared_ptr<CNode> root):
     root_(root)
 {}
@@ -46,13 +44,17 @@ void CVar::show() {
     printf("%s", name.c_str());
 }
 
+CVal::CVal(Tree_T val):
+    val_(val)
+{}
+
 void CVal::show() {
     printf("%Lf", val_);
 }
         
 CArithmOp::CArithmOp(char type, \
-        shared_ptr<CNode> left, \
-        shared_ptr<CNode> right):
+        shared_ptr<::CNode> left, \
+        shared_ptr<::CNode> right):
 
     type_(type),
     left_(left),
@@ -60,11 +62,11 @@ CArithmOp::CArithmOp(char type, \
 {}
 
 CTreeBuilder::CTreeBuilder() {
-    lex_seq.reserve(INIT_LEX_SEQ_SIZE);
-    pos = lex_seq.begin();
+    lex_seq_.reserve(INIT_LEX_SEQ_SIZE);
+    pos_ = lex_seq_.begin();
 }
 
-shared_ptr<CNode> CTreeBuilder::construct() {
+CTree CTreeBuilder::construct() {
     return CTree(GetExp());
 }
 
@@ -73,13 +75,13 @@ shared_ptr<CNode> CTreeBuilder::GetExp() {
 }
 
 shared_ptr<CNode> CTreeBuilder::GetSum() {
-    CNode* left = GetMul();
-    if (pos->type_ == SUM_OP) {
-        pos++;
-        CNode* right = GetMul();
+    shared_ptr<CNode> left = GetMul();
+    while (pos_->type_ == SUM_OP) {
+        pos_++;
+        shared_ptr<CNode> right = GetMul();
         if (!right) 
             throw 0; // TODO #0: No right side found
-        return new CArithmOp(pos->text_, left, right);
+        return make_shared<CNode> (new CArithmOp(pos_->text_[0], left, right));
     }
     
     return left;
@@ -87,35 +89,32 @@ shared_ptr<CNode> CTreeBuilder::GetSum() {
 
 
 shared_ptr<CNode> CTreeBuilder::GetMul() {
-    CNode* left = GetTok();
-    if (pos->type_ == MUL_UP) {
-        pos ++;
-        CNode* right = GetTok();
+    shared_ptr<CNode> left = GetTok();
+    while (pos_->type_ == MUL_OP) {
+        pos_++;
+        shared_ptr<CNode> right = GetTok();
         if (!right) 
             throw 0; // TODO #0
-        return new CArithmOp(pos->text_, left, right);
+        return make_shared<CNode> (new CArithmOp(pos_->text_[0], left, right));
     }
 
     return left;
 }
 
 shared_ptr<CNode> CTreeBuilder::GetTok() {
-    if (pos->type_ == LBRACKET) {
-        pos++;
-        CNode* res = GetExp();
-        if (pos->type_ != RBRACKET) 
+    if (pos_->type_ == LBRACKET) {
+        pos_++;
+        shared_ptr<CNode> res = GetExp();
+        if (pos_->type_ != RBRACKET) 
             throw 0; // TODO #1: no closing bracket found
         return res;
     }
     
-    if (pos->type_ != VALUE) {
+    if (pos_->type_ != VALUE) 
         throw 0; // Excpected Value found something
     
-    return new CVal (stod(pos->text_));
+    return make_shared<CNode> (new CVal (stod(pos_->text_)));
 }
-
-
-
 
 
 /* 
