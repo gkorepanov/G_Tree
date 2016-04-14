@@ -23,8 +23,8 @@ $(LEX): $(LEXL)
 	flex -o $@ $<
 
 clean:
-	rm $(OBJS) $(TARGET) $(LEX)
-	find . -name "*.d" | xargs rm
+	-rm $(OBJS) $(TARGET) $(LEX)
+	-find . -name "*.d" | xargs rm
 
 run:
 	$(TARGET)

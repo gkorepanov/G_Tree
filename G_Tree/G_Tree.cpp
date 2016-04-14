@@ -11,20 +11,24 @@ CTree::CTree(shared_ptr<CNode> root):
     root_(root)
 {}
 
-void CNodeTwo::print(uint level /* = 0 */) {
+CNodeTwo::CNodeTwo(shared_ptr<CNode> left, shared_ptr<CNode> right) :
+    left_(left),
+    right_(right)
+{}
+void CNodeTwo::print(uint_ level /* = 0 */) {
     if (right_) {
         right_->print(level + 1);
-        for (uint i = 0; i < level; i++)
+        for (uint_ i = 0; i < level; i++)
             printf("\t");
         printf("      /");
     }
 
-    for (uint i = 0; i < level; i++)
+    for (uint_ i = 0; i < level; i++)
             printf("\t");
     show();
 
     if (left_) {
-        for (uint i = 0; i < level; i++)
+        for (uint_ i = 0; i < level; i++)
             printf("\t");
         printf("     \\");
 
@@ -32,7 +36,7 @@ void CNodeTwo::print(uint level /* = 0 */) {
     }
 }
 
-void CNodeLeaf::print(uint level /* = 0 */) {
+void CNodeLeaf::print(uint_ level /* = 0 */) {
     show();
 }
 
@@ -56,9 +60,8 @@ CArithmOp::CArithmOp(char type, \
         shared_ptr<::CNode> left, \
         shared_ptr<::CNode> right):
 
-    type_(type),
-    left_(left),
-    right_(right)
+    CNodeTwo(left, right),
+    type_(type)
 {}
 
 CTreeBuilder::CTreeBuilder() {
@@ -81,7 +84,7 @@ shared_ptr<CNode> CTreeBuilder::GetSum() {
         shared_ptr<CNode> right = GetMul();
         if (!right) 
             throw 0; // TODO #0: No right side found
-        return make_shared<CNode> (new CArithmOp(pos_->text_[0], left, right));
+        return make_shared<CNode> (CArithmOp(pos_->text_[0], left, right));
     }
     
     return left;
@@ -95,7 +98,7 @@ shared_ptr<CNode> CTreeBuilder::GetMul() {
         shared_ptr<CNode> right = GetTok();
         if (!right) 
             throw 0; // TODO #0
-        return make_shared<CNode> (new CArithmOp(pos_->text_[0], left, right));
+        return make_shared<CNode> (CArithmOp(pos_->text_[0], left, right));
     }
 
     return left;
@@ -113,7 +116,7 @@ shared_ptr<CNode> CTreeBuilder::GetTok() {
     if (pos_->type_ != VALUE) 
         throw 0; // Excpected Value found something
     
-    return make_shared<CNode> (new CVal (stod(pos_->text_)));
+    return make_shared<CNode> (CVal (stod(pos_->text_)));
 }
 
 

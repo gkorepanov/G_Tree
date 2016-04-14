@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include "../Tools/Utils.h"
 #include "../G_Lex/G_Lex.h"
 
 // One has to put that in classes if he doesn't want it
@@ -16,7 +17,7 @@ class CNode {
 public:
     // virtual CNode* derivate();
     virtual void show();
-    virtual void print(uint level = 0);
+    virtual void print(uint_ level = 0);
 };
 
 class CTree {
@@ -39,7 +40,7 @@ private:
 // leaf node
 class CNodeLeaf : public CNode {
 public:
-    void print(uint level = 0);
+    void print(uint_ level = 0);
 };
 
 // node with two children
@@ -48,7 +49,8 @@ protected:
     shared_ptr<CNode> left_;
     shared_ptr<CNode> right_;
 public:
-    void print(uint level = 0);
+    CNodeTwo(shared_ptr<CNode> left, shared_ptr<CNode> right);
+    void print(uint_ level = 0);
 };
 
 class CArithmOp : public CNodeTwo {
@@ -65,7 +67,7 @@ public:
 class CVar : public CNodeLeaf {
 private:
     string name;
-    uint ind_;
+    uint_ ind_;
     Tree_T val_;
 public:
     void show();
