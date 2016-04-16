@@ -5,7 +5,7 @@
 
 using namespace std;
 
-extern int yylex(void);
+extern int yylex(void);//Did Ilya Ded told you to use bison for parsing? I thougnt, you were supposed to write it by youself.
 extern char* yytext;
 extern FILE* yyin;
 
@@ -16,7 +16,7 @@ enum LEX_T {
     WORD = 4,
     LBRACKET = 5,
     RBRACKET = 6,
-    END = 7
+    END = 7/* Am I misunderstanding sth, but you have another constant for end in .l file?*/
 };
 
 class CLex {

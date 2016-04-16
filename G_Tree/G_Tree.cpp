@@ -87,7 +87,7 @@ shared_ptr<CNode> CTreeBuilder::GetStr() {
 
     if (pos_->type_ != END)
         throw runtime_error(string("Incorrect abruption: ") + pos_->text_);   // TODO 
-
+        //Should be unified error handling(either macroses  with abrtions or exceptions). I see you must be aware of it.
     pos_++;
     return res;
 }

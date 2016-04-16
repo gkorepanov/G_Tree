@@ -27,9 +27,9 @@ void proceed(char* filename) {
     while ( (res = yylex()) ) {
         CLex cur_lex(static_cast<LEX_T> (res), yytext);
         TreeBuilder.lex_seq_.push_back(cur_lex);
-        printf("\"%s\"\n", yytext);
+        printf("\"%s\"\n", yytext);//why not to debug? Show the user see that?
     }
-    TreeBuilder.lex_seq_.push_back(CLex(static_cast<LEX_T> (END), ""));
+    TreeBuilder.lex_seq_.push_back(CLex(static_cast<LEX_T> (END), ""));//why not do while? But it doesn't matter.
 
     CTree Tree = TreeBuilder.construct();
 	
@@ -42,7 +42,7 @@ void proceed(char* filename) {
 
 int main(int argc, char** argv) {
     if (argc != 2)
-        USERERR("Usage: %s \"filename\"/stdin", argv[0]);
+        USERERR("Usage: %s \"filename\"/stdin", argv[0]);//exceptions would be nice.
     
     proceed(argv[1]);
 
